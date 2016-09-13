@@ -6,7 +6,7 @@
 /*   By: nchampot <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/13 22:19:32 by nchampot          #+#    #+#             */
-/*   Updated: 2016/09/13 23:32:14 by nchampot         ###   ########.fr       */
+/*   Updated: 2016/09/14 00:32:51 by nchampot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 
 
 
-
+typedef unsigned int	t_id;
 
 typedef struct	s_pos
 {
