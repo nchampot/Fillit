@@ -10,11 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
+#include "fillit.h"
 
-int	**create_int_tab(int rows, int cols)
+static int	**create_int_tab(int rows, int cols)
 {
 	int **tab;
 	int i;
@@ -29,7 +27,7 @@ int	**create_int_tab(int rows, int cols)
 	return (tab);
 }
 
-int	**init_values(void)
+static int	**init_values(void)
 {
 	int	i;
 	int	j;
@@ -70,7 +68,7 @@ int	**init_values(void)
 	return (tab);
 }
 
-char	**init_grid()
+static char	**init_grid()
 {
 	int		i;
 	int		j;
@@ -78,7 +76,12 @@ char	**init_grid()
 
 	i = 0;
 	grid = malloc(sizeof(char*) * 60);
-	*grid = malloc(sizeof(char) * 60);
+	while (i < 60)
+	{
+		grid[i] = malloc(sizeof(char) * 60);
+		i++;
+	}
+	i = 0;
 	while (i < 60)
 	{
 		j = 0;
@@ -92,15 +95,33 @@ char	**init_grid()
 	return (grid);
 }
 
-int	main(void)
+
+int	main(int ac, char **av)
 {
-	int		**cellval;
 	char	**grid;
 	int		i;
 	int		j;
+	char	**tetriminos;
 
 	i = 0;
-	cellval = init_values();
+	if (ac != 2)
+	{
+		ft_putendl_fd(USAGE, 2);
+		return (0);
+	}
+	g_cellval = init_values();
 	grid = init_grid();
+	if ((tetriminos = import_file(av[1])) == NULL)
+		return (0);
+	while (tetriminos[i])
+	{
+	ft_putendl("test0");
+		if (fill_this(&grid, import_fig(tetriminos[i])) == 0)
+		{
+			ft_putendl_fd("an error occured while filling tretriminos GL HF XD", 2);
+			return (0);
+		}
+		i++;
+	}
 	return (0);
 }

@@ -12,36 +12,42 @@
 
 #include "fillit.h"
 
-int		check(char **grid, t_pos *figure, int i, int j, int lower_val)
+static int		check(char **grid, t_pos *figure, int i, int j)
 {
 	int	k;
 	int	value;
 
 	k = 0;
 	value = 0;
-	while (!figure[k].is_last && value < lower_val)
+	while (k < 4)
 	{
 		if (grid[i + figure[k].x][j + figure[k].y] != '0')
 			return (-1);
-		value += cellval[i + figure[k].x][j + figure[k].y];
+		value += g_cellval[i + figure[k].x][j + figure[k].y];
 		k++;
 	}
-	return (value < lower_val ? value : -1);
+	return (value);
 }	
 
-t_pos	check_all(char **grid, t_pos *figure)
+static t_pos	check_all(char **grid, t_pos *figure)
 {
 	int 	i;
 	int 	j;
 	int 	tmp;
 	int		max;
+	int	lower_val;
+	t_pos	best_pos;
 
 	i = get_min(grid);
 	j = i;
 	max = i + 10;
 	while (i != max && j != max)
 	{
-		best_pos = checK(grid, figure, i, j, lower_val) != -1 ? new_pos(i, j) : best_pos;
+		if ((tmp = check(grid, figure, i, j)) < lower_val)
+		{
+			lower_val = tmp;
+			best_pos = new_pos(i, j);
+		}
 		if (i == j)
 		{
 			i = 0;
@@ -54,22 +60,35 @@ t_pos	check_all(char **grid, t_pos *figure)
 			i = tmp;
 		}
 		else
+		{
 			j++;
+			if (j != i)
+			{
+				tmp = i;
+				i = j;
+				j = tmp;
+			}
+		}
 	}
 	return (best_pos);
 }
 
-void	fill_this(char	***grid, t_pos *figure)
+int	fill_this(char	***grid, t_pos *figure)
 {
 	static char	letter = 'A';
 	int	i;
-	t_pos best_pos;
+	t_pos pos;
 
-	best_pos = check_all(*grid, figure);
-	while (!figure[i].is_last)	
+	ft_putendl("test1");
+	if (figure == NULL)
+		return (0);
+	pos = check_all(*grid, figure);
+	ft_putendl("test2");
+	while (i < 4)	
 	{
 		(*grid)[pos.x][pos.y] = letter;
 		i++;
 	}
 	letter++;
+	return (1);
 }
