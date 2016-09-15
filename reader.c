@@ -7,6 +7,21 @@ char	**ft_puterror(char *msg)
 	return (NULL);
 }
 
+static int	nb_line(char *file_name)
+{
+	char	*buf;
+	int	i;
+	int	fd;
+
+	i = 1;
+	if ((fd = open(file_name, O_RDONLY)) == -1)
+		return (1);
+	while (get_next_line(fd, &buf))
+		i++;
+	close(fd);
+	return (i);
+}
+
 char	**import_file(char *file_name)
 {
 	char	*buf;
@@ -15,7 +30,7 @@ char	**import_file(char *file_name)
 	int	fd;
 
 	i = 0;
-	tetriminos = malloc(sizeof(char*));
+	tetriminos = malloc(sizeof(char*) * nb_line(file_name));
 	*tetriminos = malloc(16);
 	if ((fd = open(file_name, O_RDONLY)) == -1)
 		return (ft_puterror("ERROR: WRONG FILE NAME"));
@@ -28,7 +43,10 @@ char	**import_file(char *file_name)
 			if (ft_strlen(tetriminos[i]) == 16)
 			{
 				if (!(get_next_line(fd, &buf)))
+				{
+					close(fd);
 					return (tetriminos);
+				}
 				else if (buf)
 					tetriminos[++i] = malloc(16);
 			}

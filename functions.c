@@ -170,6 +170,7 @@ t_pos	*import_fig(char *map)
 	j = 0;
 	k = 0;
 	x = 0;
+	ft_putendl("test200");
 	is_correct = 0;
 	fig = malloc(sizeof(t_pos) * 4);
 	while (map[k])
@@ -192,6 +193,5 @@ t_pos	*import_fig(char *map)
 		i++;
 		k++;
 	}
-	i = 0;
 	return ((is_correct) ? re_order(fig) : NULL);
 }
