@@ -113,14 +113,15 @@ int	main(int ac, char **av)
 	grid = init_grid();
 	if ((tetriminos = import_file(av[1])) == NULL)
 		return (0);
-	while (tetriminos[i])
+	while (tetriminos[i] != NULL)
 	{
-	ft_putendl("test0");
 		if (fill_this(&grid, import_fig(tetriminos[i])) == 0)
 		{
 			ft_putendl_fd("an error occured while filling tretriminos GL HF XD", 2);
 			return (0);
 		}
+		show_grid(grid);
+		ft_putchar('\n');
 		i++;
 	}
 	return (0);

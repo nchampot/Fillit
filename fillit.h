@@ -37,6 +37,7 @@ int	fill_this(char	***grid, t_pos *figure);
 int	get_min(char **grid);
 t_pos	*import_fig(char *map);
 t_pos	new_pos(int i, int j);
+void	show_grid(char **grid);
 
 int	**g_cellval;
 

@@ -38,3 +38,22 @@ char	**import_file(char *file_name)
 	}
 	return (ft_puterror("ERROR: EMPTY FILE"));
 }
+
+void	show_grid(char **grid)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < 10)
+	{
+		j = 0;
+		while (j < 10)
+		{
+			ft_putchar(grid[i][j]);
+			j++;
+		}
+		ft_putchar('\n');
+		i++;
+	}
+}

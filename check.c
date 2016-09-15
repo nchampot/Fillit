@@ -79,11 +79,9 @@ int	fill_this(char	***grid, t_pos *figure)
 	int	i;
 	t_pos pos;
 
-	ft_putendl("test1");
 	if (figure == NULL)
 		return (0);
 	pos = check_all(*grid, figure);
-	ft_putendl("test2");
 	while (i < 4)	
 	{
 		(*grid)[pos.x][pos.y] = letter;
