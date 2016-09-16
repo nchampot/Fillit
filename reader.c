@@ -36,7 +36,6 @@ char	**import_file(char *file_name)
 		return (ft_puterror("ERROR: WRONG FILE NAME"));
 	while (get_next_line(fd, &buf))
 	{
-		ft_putendl(ft_itoa(ft_strlen(buf)));
 		if (ft_strlen(buf) == 4)
 		{
 			tetriminos[i] = ft_strcat(tetriminos[i], buf);
@@ -57,18 +56,59 @@ char	**import_file(char *file_name)
 	return (ft_puterror("ERROR: EMPTY FILE"));
 }
 
+
+t_pos	get_max(char **grid)
+{
+	int	i;
+	int	j;
+	t_pos	max;
+	int	k;
+
+	i = 0;
+	j = 0;
+	k = 60;
+	max.x = 0;
+	max.y = 0;
+	while (k--)
+	{
+		i = max.x;
+		while (i < 60)
+		{
+			j = max.y;
+			while (j < 60)
+			{
+				if (grid[i][j] == '0') 
+				{
+					if (grid[i + 1][j] == '0' && grid[i + 2][j])
+						max.x = max.x < i ? i : max.x;
+					if (grid[i][j + 1] == '0' && grid[i][j + 2])
+						max.y = max.y < i ? i : max.y;
+				}
+				j++;
+			}
+			i++;
+		}
+	}
+	return (max);
+}
+
 void	show_grid(char **grid)
 {
 	int	i;
 	int	j;
+	//t_pos	max;
 
 	i = 0;
+	//max = get_max(grid);
 	while (i < 10)
 	{
 		j = 0;
 		while (j < 10)
 		{
-			ft_putchar(grid[i][j]);
+			if (grid[i][j] == '0')
+				ft_putchar('.');
+			else
+				ft_putchar(grid[i][j]);
 			j++;
 		}
 		ft_putchar('\n');

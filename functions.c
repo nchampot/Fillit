@@ -31,8 +31,11 @@ static int	get_value(t_pos *figure)
 static int	is_known(t_pos *figure)
 {
 	int	value;
+	static	int	i = 1;
 
 	value = get_value(figure);
+	printf("[%d] = %d\n", i, value);
+	i++;
 	return (!(value == T_UP || value == T_RIGHT));/* || value == T_LEFT\
 			|| value == T_DOWN || value == LR_UP || value == LR_DOWN));*/
 }
@@ -45,7 +48,7 @@ int	get_min(char **grid)
 
 	i = 0;
 	j = 0;
-	while (i != 60 && j != 60 && grid[i][j] != '0')
+	while (i != 60 && j != 60 && grid[i][j] == '0')
 	{
 		if (i == j)
 		{
@@ -104,7 +107,6 @@ static t_pos	*push(t_pos *fig)
 		fig[i].y = fig[i].y - min_y;
 		i++;
 	}
-	ft_putendl("test30");
 	return (is_known(fig) ? fig : NULL);
 }
 
@@ -170,7 +172,6 @@ t_pos	*import_fig(char *map)
 	j = 0;
 	k = 0;
 	x = 0;
-	ft_putendl("test200");
 	is_correct = 0;
 	fig = malloc(sizeof(t_pos) * 4);
 	while (map[k])
@@ -179,8 +180,8 @@ t_pos	*import_fig(char *map)
 			return (NULL);
 		if ((k + 1) % 4 == 0)
 		{
-			j++;
-			i = 0;
+			i++;
+			j = 0;
 			k++;
 			continue;
 		}
@@ -190,7 +191,7 @@ t_pos	*import_fig(char *map)
 			if (!is_correct && (i == 0 || j == 0 || i == 4 ||  j == 4))
 				is_correct++;
 		}
-		i++;
+		j++;
 		k++;
 	}
 	return ((is_correct) ? re_order(fig) : NULL);

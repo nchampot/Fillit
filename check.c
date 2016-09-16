@@ -41,12 +41,14 @@ static t_pos	check_all(char **grid, t_pos *figure)
 	i = get_min(grid);
 	j = i;
 	max = i + 10;
+	lower_val = 100000;
 	while (i != max && j != max)
 	{
-		if ((tmp = check(grid, figure, i, j)) < lower_val && tmp >= 0)
+		if ((tmp = check(grid, figure, i, j)) < lower_val && tmp != -1)
 		{
 			lower_val = tmp;
 			best_pos = new_pos(i, j);
+	//printf("[%d %d] = %d\n", i, j, lower_val);
 		}
 		if (i == j)
 		{
@@ -81,12 +83,13 @@ int	fill_this(char	***grid, t_pos *fig)
 
 	if (fig == NULL)
 		return (0);
-	ft_putendl("test300");
+	i = 0;
 	pos = check_all(*grid, fig);
-	ft_putendl("test301");
+	//printf("%d %d\n", pos.x, pos.y);
 	while (i < 4)	
 	{
 		(*grid)[pos.x + fig[i].x][pos.y + fig[i].y] = letter;
+	//	printf("%c\n",(*grid)[pos.x + fig[i].x][pos.y + fig[i].y]);
 		i++;
 	}
 	letter++;

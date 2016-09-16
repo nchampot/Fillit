@@ -120,9 +120,9 @@ int	main(int ac, char **av)
 			ft_putendl_fd("an error occured while filling tretriminos GL HF XD", 2);
 			return (0);
 		}
-		show_grid(grid);
-		ft_putchar('\n');
 		i++;
 	}
+	show_grid(grid);
+	ft_putchar('\n');
 	return (0);
 }
