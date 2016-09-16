@@ -6,7 +6,7 @@
 /*   By: nchampot <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/13 22:19:32 by nchampot          #+#    #+#             */
-/*   Updated: 2016/09/14 05:50:14 by nchampot         ###   ########.fr       */
+/*   Updated: 2016/09/16 05:48:06 by nchampot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,15 @@
 */
 # define T_UP 78
 # define T_RIGHT 45
+# define T_LEFT 142
+# define T_DOWN 27
+# define LR_DOWN 165
+# define LL_DOWN 170
+# define LL_UP 139
+# define LR_UP 39
+# define Z_UP 75
+# define Z_DOWN 30
+# define SQUARE 15
 
 
 typedef struct	s_pos

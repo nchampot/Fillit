@@ -6,7 +6,7 @@
 /*   By: nchampot <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/14 01:52:27 by nchampot          #+#    #+#             */
-/*   Updated: 2016/09/14 06:14:27 by nchampot         ###   ########.fr       */
+/*   Updated: 2016/09/16 05:48:55 by nchampot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,12 @@ static int	get_value(t_pos *figure)
 static int	is_known(t_pos *figure)
 {
 	int	value;
-	static	int	i = 1;
 
 	value = get_value(figure);
-	printf("[%d] = %d\n", i, value);
-	i++;
-	return (!(value == T_UP || value == T_RIGHT));/* || value == T_LEFT\
-			|| value == T_DOWN || value == LR_UP || value == LR_DOWN));*/
+	return (value == T_UP || value == T_RIGHT || value == T_LEFT ||\
+			value == T_DOWN || value == LR_UP || value == LR_DOWN ||\
+			value == LL_DOWN || value == LL_UP || value == Z_DOWN ||\
+			value == SQUARE || value == Z_UP);
 }
 
 int	get_min(char **grid)
@@ -91,9 +90,10 @@ static t_pos	*push(t_pos *fig)
 	int	min_x;
 	int	min_y;
 
-	i = 0;
+	new = malloc(sizeof(t_pos) * 4);
 	min_x = fig[0].x;
 	min_y = fig[0].y;
+	i = 1;
 	while (i < 4)
 	{
 		min_x = min_x < fig[i].x ? min_x : fig[i].x; 
@@ -103,11 +103,11 @@ static t_pos	*push(t_pos *fig)
 	i = 0;
 	while (i < 4)
 	{
-		fig[i].x = fig[i].x - min_x;
-		fig[i].y = fig[i].y - min_y;
+		new[i].x = fig[i].x - min_x;
+		new[i].y = fig[i].y - min_y;
 		i++;
 	}
-	return (is_known(fig) ? fig : NULL);
+	return (is_known(new) ? new : NULL);
 }
 
 static t_pos	*re_order(t_pos *fig)
@@ -124,13 +124,17 @@ static t_pos	*re_order(t_pos *fig)
 	k = 0;
 	j = 0;
 	new = malloc(sizeof(t_pos) * 4);
-	while (i != 3 && j != 3 && n < 4)
+	while (i < 4 && j < 4)
 	{
 		k = 0;
 		while (k < 4)
 		{
 			if (fig[k].x == i && fig[k].y == j)
-				new[n++] = new_pos(i, j);
+			{
+				new[n++] = new_pos(fig[k].x, fig[k].y);
+				fig[k].x = -1;
+				fig[k].y = -1;
+			}
 			k++;
 		}
 		if (i == j)
@@ -165,34 +169,27 @@ t_pos	*import_fig(char *map)
 	int	x;
 	int	k;
 	int	tmp;
-	int	is_correct;
 	t_pos	*fig;
 
 	i = 0;
 	j = 0;
 	k = 0;
 	x = 0;
-	is_correct = 0;
 	fig = malloc(sizeof(t_pos) * 4);
 	while (map[k])
 	{
 		if (map[k] != '.' && map[k] != '#' && map[k] != '\n')
 			return (NULL);
+		if (map[k] == '#')
+			fig[x++] = new_pos(j, i);
 		if ((k + 1) % 4 == 0)
 		{
+			j++;
+			i = 0;
+		}
+		else
 			i++;
-			j = 0;
-			k++;
-			continue;
-		}
-		if (map[k] == '#')
-		{
-			fig[x++] = new_pos(i, j);
-			if (!is_correct && (i == 0 || j == 0 || i == 4 ||  j == 4))
-				is_correct++;
-		}
-		j++;
 		k++;
 	}
-	return ((is_correct) ? re_order(fig) : NULL);
+	return (re_order(fig));
 }

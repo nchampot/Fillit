@@ -62,32 +62,24 @@ t_pos	get_max(char **grid)
 	int	i;
 	int	j;
 	t_pos	max;
-	int	k;
 
 	i = 0;
 	j = 0;
-	k = 60;
 	max.x = 0;
 	max.y = 0;
-	while (k--)
+	while (i < 60)
 	{
-		i = max.x;
-		while (i < 60)
+		j = 0;
+		while (j < 60)
 		{
-			j = max.y;
-			while (j < 60)
+			if (grid[i][j] != '0' && grid[i][j + 1] == '0' && grid[i][j + 2] == '0')
 			{
-				if (grid[i][j] == '0') 
-				{
-					if (grid[i + 1][j] == '0' && grid[i + 2][j])
-						max.x = max.x < i ? i : max.x;
-					if (grid[i][j + 1] == '0' && grid[i][j + 2])
-						max.y = max.y < i ? i : max.y;
-				}
-				j++;
+				max.x = max.x > i ? max.x : i;
+				max.y = max.y > j ? max.y : j;
 			}
-			i++;
+			j++;
 		}
+		i++;
 	}
 	return (max);
 }
@@ -96,14 +88,14 @@ void	show_grid(char **grid)
 {
 	int	i;
 	int	j;
-	//t_pos	max;
+	t_pos	max;
 
 	i = 0;
-	//max = get_max(grid);
-	while (i < 10)
+	max = get_max(grid);
+	while (i < max.x + 1)
 	{
 		j = 0;
-		while (j < 10)
+		while (j < max.y + 1)
 		{
 			if (grid[i][j] == '0')
 				ft_putchar('.');
@@ -111,7 +103,8 @@ void	show_grid(char **grid)
 				ft_putchar(grid[i][j]);
 			j++;
 		}
-		ft_putchar('\n');
 		i++;
+		if (i < max.x + 1)
+			ft_putchar('\n');
 	}
 }

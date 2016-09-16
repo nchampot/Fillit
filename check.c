@@ -6,7 +6,7 @@
 /*   By: nchampot <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/13 22:15:33 by nchampot          #+#    #+#             */
-/*   Updated: 2016/09/14 06:14:26 by nchampot         ###   ########.fr       */
+/*   Updated: 2016/09/16 05:48:07 by nchampot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ static t_pos	check_all(char **grid, t_pos *figure)
 		{
 			lower_val = tmp;
 			best_pos = new_pos(i, j);
-	//printf("[%d %d] = %d\n", i, j, lower_val);
 		}
 		if (i == j)
 		{
@@ -85,11 +84,9 @@ int	fill_this(char	***grid, t_pos *fig)
 		return (0);
 	i = 0;
 	pos = check_all(*grid, fig);
-	//printf("%d %d\n", pos.x, pos.y);
 	while (i < 4)	
 	{
 		(*grid)[pos.x + fig[i].x][pos.y + fig[i].y] = letter;
-	//	printf("%c\n",(*grid)[pos.x + fig[i].x][pos.y + fig[i].y]);
 		i++;
 	}
 	letter++;

@@ -6,7 +6,7 @@
 /*   By: nchampot <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/13 23:15:57 by nchampot          #+#    #+#             */
-/*   Updated: 2016/09/14 06:14:29 by nchampot         ###   ########.fr       */
+/*   Updated: 2016/09/16 05:49:40 by nchampot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	**init_values(void)
 
 	i = 0;
 	j = 0;
-	value = 1;
+	value = 0;
 	tab = create_int_tab(60, 60);
 	while (i != 60 && j != 60)
 	{
@@ -117,7 +117,7 @@ int	main(int ac, char **av)
 	{
 		if (fill_this(&grid, import_fig(tetriminos[i])) == 0)
 		{
-			ft_putendl_fd("an error occured while filling tretriminos GL HF XD", 2);
+			ft_putendl_fd("ERROR: WRONG FILE FORMAT", 2);
 			return (0);
 		}
 		i++;
