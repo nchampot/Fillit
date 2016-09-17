@@ -35,8 +35,11 @@ static int	is_known(t_pos *figure)
 	value = get_value(figure);
 	return (value == T_UP || value == T_RIGHT || value == T_LEFT ||\
 			value == T_DOWN || value == LR_UP || value == LR_DOWN ||\
-			value == LL_DOWN || value == LL_UP || value == Z_DOWN ||\
-			value == SQUARE || value == Z_UP);
+			value == LL_DOWN || value == LL_UP || value == ZR_DOWN ||\
+			value == SQUARE || value == ZR_UP || value == LINE_UP ||\
+			value == LINE_DOWN || value == LR_RDOWN ||\
+			value == LR_LDOWN || value == LR_RUP || value == LR_LUP\
+			|| value == ZL_DOWN || value == ZL_UP);
 }
 
 int	get_min(char **grid)
@@ -74,12 +77,13 @@ int	get_min(char **grid)
 	return (i > j ? j : i);
 }
 
-t_pos	new_pos(int i, int j)
+t_pos	new_pos(int i, int j, char letter)
 {
 	t_pos pos;
 
 	pos.x = i;
 	pos.y = j;
+	pos.l = letter;
 	return (pos);
 }
 
@@ -105,6 +109,7 @@ static t_pos	*push(t_pos *fig)
 	{
 		new[i].x = fig[i].x - min_x;
 		new[i].y = fig[i].y - min_y;
+		new[i].l = fig[i].l;
 		i++;
 	}
 	return (is_known(new) ? new : NULL);
@@ -131,7 +136,7 @@ static t_pos	*re_order(t_pos *fig)
 		{
 			if (fig[k].x == i && fig[k].y == j)
 			{
-				new[n++] = new_pos(fig[k].x, fig[k].y);
+				new[n++] = new_pos(fig[k].x, fig[k].y, fig[k].l);
 				fig[k].x = -1;
 				fig[k].y = -1;
 			}
@@ -162,7 +167,7 @@ static t_pos	*re_order(t_pos *fig)
 	return (push(new));
 }
 
-t_pos	*import_fig(char *map)
+t_pos	*import_fig(int letter, char *map)
 {
 	int	i;
 	int	j;
@@ -181,7 +186,7 @@ t_pos	*import_fig(char *map)
 		if (map[k] != '.' && map[k] != '#' && map[k] != '\n')
 			return (NULL);
 		if (map[k] == '#')
-			fig[x++] = new_pos(j, i);
+			fig[x++] = new_pos(j, i, (char)(letter + 65));
 		if ((k + 1) % 4 == 0)
 		{
 			j++;

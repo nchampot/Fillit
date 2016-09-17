@@ -12,7 +12,7 @@
 
 #include "fillit.h"
 
-static int		check(char **grid, t_pos *figure, int i, int j)
+static int		check(char **grid, t_pos *fig, int i, int j)
 {
 	int	k;
 	int	value;
@@ -21,15 +21,15 @@ static int		check(char **grid, t_pos *figure, int i, int j)
 	value = 0;
 	while (k < 4)
 	{
-		if (grid[i + figure[k].x][j + figure[k].y] != '0')
+		if (grid[i + fig[k].x][j + fig[k].y] != '0')
 			return (-1);
-		value += g_cellval[i + figure[k].x][j + figure[k].y];
+		value += g_cellval[i + fig[k].x][j + fig[k].y];
 		k++;
 	}
 	return (value);
 }	
 
-static t_pos	check_all(char **grid, t_pos *figure)
+t_pos	check_all(char **grid, t_pos *fig)
 {
 	int 	i;
 	int 	j;
@@ -44,10 +44,10 @@ static t_pos	check_all(char **grid, t_pos *figure)
 	lower_val = 100000;
 	while (i != max && j != max)
 	{
-		if ((tmp = check(grid, figure, i, j)) < lower_val && tmp != -1)
+		if ((tmp = check(grid, fig, i, j)) < lower_val && tmp != -1)
 		{
 			lower_val = tmp;
-			best_pos = new_pos(i, j);
+			best_pos = new_pos(i, j, fig[0].l);
 		}
 		if (i == j)
 		{
@@ -76,7 +76,6 @@ static t_pos	check_all(char **grid, t_pos *figure)
 
 int	fill_this(char	***grid, t_pos *fig)
 {
-	static char	letter = 'A';
 	int	i;
 	t_pos pos;
 
@@ -86,9 +85,8 @@ int	fill_this(char	***grid, t_pos *fig)
 	pos = check_all(*grid, fig);
 	while (i < 4)	
 	{
-		(*grid)[pos.x + fig[i].x][pos.y + fig[i].y] = letter;
+		(*grid)[pos.x + fig[i].x][pos.y + fig[i].y] = fig[i].l;
 		i++;
 	}
-	letter++;
 	return (1);
 }

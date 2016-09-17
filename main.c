@@ -68,7 +68,7 @@ static int	**init_values(void)
 	return (tab);
 }
 
-static char	**init_grid()
+char	**init_grid()
 {
 	int		i;
 	int		j;
@@ -99,29 +99,29 @@ static char	**init_grid()
 int	main(int ac, char **av)
 {
 	char	**grid;
-	int		i;
-	int		j;
-	char	**tetriminos;
+	//int		i;
+	//int		j;
+	t_pos	**tetriminos;
 
-	i = 0;
 	if (ac != 2)
 	{
 		ft_putendl_fd(USAGE, 2);
 		return (0);
 	}
 	g_cellval = init_values();
-	grid = init_grid();
 	if ((tetriminos = import_file(av[1])) == NULL)
 		return (0);
-	while (tetriminos[i] != NULL)
+	//i = 0;
+	grid = get_grid(tetriminos);
+/*	while (tetriminos[i] != NULL)
 	{
-		if (fill_this(&grid, import_fig(tetriminos[i])) == 0)
+		if (fill_this(&grid, tetriminos[i]) == 0)
 		{
 			ft_putendl_fd("ERROR: WRONG FILE FORMAT", 2);
 			return (0);
 		}
 		i++;
-	}
+	}*/
 	show_grid(grid);
 	ft_putchar('\n');
 	return (0);

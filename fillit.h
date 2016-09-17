@@ -29,8 +29,16 @@
 # define LL_DOWN 170
 # define LL_UP 139
 # define LR_UP 39
-# define Z_UP 75
-# define Z_DOWN 30
+# define LR_LDOWN 23
+# define LR_RDOWN 83
+# define LR_LUP 92
+# define LR_RUP 77
+# define ZR_UP 75
+# define ZL_UP 141
+# define ZR_DOWN 30
+# define ZL_DOWN 46
+# define LINE_UP 531
+# define LINE_DOWN 1061
 # define SQUARE 15
 
 
@@ -38,15 +46,19 @@ typedef struct	s_pos
 {
 	int	x;
 	int	y;
+	char	l;
 }				t_pos;
 
 
-char	**import_file(char *file_name);
+t_pos	**import_file(char *file_name);
+t_pos	check_all(char **grid, t_pos *fig);
 int	fill_this(char	***grid, t_pos *figure);
 int	get_min(char **grid);
-t_pos	*import_fig(char *map);
-t_pos	new_pos(int i, int j);
+t_pos	*import_fig(int letter, char *map);
+t_pos	new_pos(int i, int j, char letter);
 void	show_grid(char **grid);
+char	**get_grid(t_pos **tetriminos);
+char	**init_grid();
 
 int	**g_cellval;
 
